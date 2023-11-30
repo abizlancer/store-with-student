@@ -1,28 +1,42 @@
-import { Outlet, Link } from 'react-router-dom'
+import { useState, useContext } from "react";
+import { Outlet, Link } from "react-router-dom";
 
-import './navigation.styles.scss'
+import CartIcon from "../cart-icon/cart-icon.component";
+import CartDropdown from "../cart-drowpdown/cart-dropdown.component";
+
+import { CartContext } from "../../context/cart.context";
+
+import "./navigation.styles.scss";
 
 const Navigation = () => {
-    return (
-        <div>
-            <div className="navigation">
-                <Link to="/" className="logo-container">
-                    <span>Logo</span>
-                </Link>
+  const { isCartOpen } = useContext(CartContext) 
 
-                <ul className="nav-links-container">
-                    <li>
-                        <Link className="nav-link" to="/">Home</Link>
-                    </li>
-                    <li>
-                        <Link className="nav-link" to="/shop">Shop</Link>
-                    </li>
-                </ul>
-            </div>
+  return (
+    <div>
+      <div className="navigation">
+        <Link to="/" className="logo-container">
+          <span>Logo</span>
+        </Link>
 
-            <Outlet />
-        </div>
-    )
-}
+        <ul className="nav-links-container">
+          <li>
+            <Link className="nav-link" to="/">
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link className="nav-link" to="/shop">
+              Shop
+            </Link>
+          </li>
+          <CartIcon />
+        </ul>
+        {isCartOpen && <CartDropdown />}
+      </div>
 
-export default Navigation
+      <Outlet />
+    </div>
+  );
+};
+
+export default Navigation;
